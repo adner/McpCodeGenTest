@@ -1,4 +1,5 @@
-﻿using Microsoft.Crm.Sdk.Messages;
+﻿using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
+using ScriptRunnerLib;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -30,11 +32,12 @@ builder.Services.AddSingleton<IOrganizationService>(provider =>
     return new ServiceClient(connectionString);
 });
 
-// // Test the WhoAmI tool directly
+// Test the WhoAmI tool directly
 // var serviceProvider = builder.Build().Services;
 // var orgService = serviceProvider.GetRequiredService<IOrganizationService>();
-// var whoAmIResult = DataverseTool.WhoAmI(orgService);
-// Console.WriteLine(whoAmIResult);
+// var codeGenTool = new CodeGenTool(orgService);
+
+// var result = codeGenTool.RunScript("var user = WhoAmI();user");
 
 builder.Services
     .AddMcpServer()
@@ -43,16 +46,40 @@ builder.Services
 await builder.Build().RunAsync();
 
 [McpServerToolType]
-public static class DataverseTool
+public class CodeGenTool
 {
-    [McpServerTool, Description("Executes an WhoAmI request aginst Dataverse and returns the result as a JSON string.")]
-    public static string WhoAmI(IOrganizationService orgService)
+    private ScriptRunnerLib.ScriptRunner<DataverseTools> _scriptRunner;
+
+    public CodeGenTool(IOrganizationService orgService)
+    {
+        _scriptRunner = new ScriptRunnerLib.ScriptRunner<DataverseTools>(new DataverseTools(orgService));
+    }
+
+    [McpServerTool, Description("Call this tool to execute C# code.")]
+    public string RunScript(string code)
+    {
+        var result = _scriptRunner.RunScript(code).Result;
+
+        return result;
+    }
+}
+
+public class DataverseTools
+{   
+    private IOrganizationService _orgService;
+    public DataverseTools(IOrganizationService service)
+    {
+        _orgService = service;      
+    }
+
+    [Description("Executes an WhoAmI request aginst Dataverse and returns the result as a JSON string.")]
+    public string WhoAmI()
     {
         try
         {
             WhoAmIRequest req = new WhoAmIRequest();
 
-            var whoAmIResult = orgService.Execute(req);
+            var whoAmIResult = _orgService.Execute(req);
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(whoAmIResult);
         }
@@ -64,13 +91,13 @@ public static class DataverseTool
         }
     }
 
-    [McpServerTool, Description("Executes an FetchXML request using the supplied expression that needs to be a valid FetchXml expression. Returns the result as a JSON string. If the request fails, the response will be prepended with [ERROR] and the error should be presented to the user.")]
-    public static string ExecuteFetch(string fetchXmlRequest, IOrganizationService orgService)
+    [Description("Executes an FetchXML request using the supplied expression that needs to be a valid FetchXml expression. Returns the result as a JSON string. If the request fails, the response will be prepended with [ERROR] and the error should be presented to the user.")]
+    public string ExecuteFetch(string fetchXmlRequest)
     {
         try
         {
             FetchExpression fetchExpression = new FetchExpression(fetchXmlRequest);
-            EntityCollection result = orgService.RetrieveMultiple(fetchExpression);
+            EntityCollection result = _orgService.RetrieveMultiple(fetchExpression);
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
@@ -83,8 +110,8 @@ public static class DataverseTool
         }
     }
 
-    [McpServerTool, Description("Creates a Speaker.")]
-    public static string CreateSpeaker(string firstname, string lastname, IOrganizationService orgService)
+    [Description("Creates a Speaker.")]
+    public string CreateSpeaker(string firstname, string lastname)
     {
         try
         {
@@ -92,7 +119,7 @@ public static class DataverseTool
             contact["firstname"] = firstname;
             contact["lastname"] = lastname;
 
-            Guid contactId = orgService.Create(contact);
+            Guid contactId = _orgService.Create(contact);
 
             return $"Contact created successfully with ID: {contactId}";
         }
@@ -105,8 +132,8 @@ public static class DataverseTool
         }
     }
 
-    [McpServerTool, Description("Creates an Event.")]
-    public static string CreateEvent(string eventName, string location, DateTime eventDate, IOrganizationService orgService)
+    [Description("Creates an Event.")]
+    public string CreateEvent(string eventName, string location, DateTime eventDate)
     {
         try
         {
@@ -115,7 +142,7 @@ public static class DataverseTool
             eventEntity["new_location"] = location;
             eventEntity["cr5ec_eventdate"] = eventDate;
 
-            Guid eventId = orgService.Create(eventEntity);
+            Guid eventId = _orgService.Create(eventEntity);
 
             return $"Event created successfully with ID: {eventId}";
         }
@@ -128,8 +155,8 @@ public static class DataverseTool
         }
     }
 
-    [McpServerTool, Description("Adds a speaker to an event.")]
-    public static string AddSpeakerToEvent(Guid eventId, Guid speakerId, IOrganizationService orgService)
+    [Description("Adds a speaker to an event.")]
+    public string AddSpeakerToEvent(Guid eventId, Guid speakerId)
     {
         try
         {
@@ -145,7 +172,7 @@ public static class DataverseTool
                 Relationship = relationship
             };
 
-            orgService.Execute(request);
+           _orgService.Execute(request);
 
             return $"Speaker {speakerId} successfully added to event {eventId}";
         }
@@ -158,8 +185,8 @@ public static class DataverseTool
         }
     }
 
-    [McpServerTool, Description("Updates the biography of a speaker.")]
-    public static string UpdateSpeakerBiography(Guid speakerId, string biography, IOrganizationService orgService)
+    [Description("Updates the biography of a speaker.")]
+    public string UpdateSpeakerBiography(Guid speakerId, string biography)
     {
         try
         {
@@ -171,7 +198,7 @@ public static class DataverseTool
                 Target = contact
             };
 
-            orgService.Execute(request);
+            _orgService.Execute(request);
 
             return $"Speaker biography successfully updated for {speakerId}.";
         }
@@ -184,6 +211,7 @@ public static class DataverseTool
         }
     }
 }
+
 
 
 

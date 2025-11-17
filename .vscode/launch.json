@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch DevUI",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build DevUI",
+            "program": "${workspaceFolder}/DevUI/bin/Debug/net9.0/DevUI.dll",
+            "cwd": "${workspaceFolder}/DevUI",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "uriFormat": "%s/devui"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "justMyCode": true,
+            "stopAtEntry": false
+        }
+    ]
+}

@@ -1,0 +1,128 @@
+
+Here you can find all presentations from past events. 
+
+2025-09-25 MALMÖ, Fellowmind,
+Speakers:
+Danijel Buljat
+David Schützer
+
+2025-09-03 STOCKHOLM, Xlent,
+Speakers:
+Marica Lagerheim
+Mats Necker
+
+2025-05-07 STOCKHOLM, Columbus Sverige,
+Speakers:
+Daniel Sandberg
+Sara Lagerquist
+
+2025-04-10 MALMÖ, Softronic,
+Speakers:
+Gilbert Peine
+Sara Lagerquist
+
+2025-04-02 STOCKHOLM, Sirocco Group,
+Speakers:
+Kristine Risberg
+Emil Thornberg
+
+2025-02-12 STOCKHOLM, Sopra Steria,
+Speakers:
+Jakob Örneberg
+Amanda Sterner
+
+2025-01-30 MALMÖ, Trygg-Hansa
+Speakers:
+Marcus Erlandsson
+Negar Shahbaz
+
+2024-12-03 STOCKHOLM, B3 Elevate
+Speakers:
+Dona Sarkar
+Mats Necker
+Daniel Laskewitz
+
+2024-10-03 STOCKHOLM, Sopra Steria
+Speakers:
+Kevin Palm
+Fredrik Neiderud
+
+2024-05-09 STOCKHOLM, CRM-Konsulterna
+Speakers:
+Sara Lagerquist
+Ryan Cunningham (online)
+
+2024-02-06 HELSINGBORG, Hetch
+Speakers:
+Lilian Stenholt Thomsen
+Vivian Voss
+
+2024-01-17 STOCKHOLM, Exobe
+Speakers:
+Daniel Lindgren
+Jakob Örneberg
+
+2023-11-14 HELSINGBORG, MindPark
+Speakers:
+Markus Erlandsson
+Elisabeth Doreste
+
+2023-11-08 STOCKHOLM, Nexer Group
+Speakers:
+Doher Drizzle Pablo
+Sara Lagerquist
+
+2023-05-10, Sopra Steria
+Speakers:
+Jakob Örneberg
+Brian Stokes och Sara Lagerquist
+
+2023-03-15, Meltlake
+Speakers:
+Markus Lykonhold
+Benedikt Bergmann
+
+2023-01-24, B3 Dynamics
+Speakers:
+Kim Ekman
+Carl Gustavsson
+
+2022-11-16, Amanzia
+Speakers:
+Fredrik Neiderud
+Gustaf Westerlund
+
+2021-06-14, Implema
+Speakers:
+Victor Stridsman
+Gustaf Westerlund
+Louise Fagerström
+Marcus Berglund
+Sofie Borck Janeheim
+Sara Lagerquist
+
+2020-05-03, Columbus
+Speakers:
+Sara Lagerquist
+Ove Bristrand
+
+2021-11-09, CRMK (CRM-Konsulterna)
+Speaker:
+Marica Söderstam
+Carl Aspernäs
+
+2020-01-29, Innofactor
+Speakers:
+Sara Lagerquist
+Benedikt Bergmann
+
+2019-11-14, Sopra Steria
+Speakers:
+Carina Claesson
+Kathrine Hogseth
+Gustaf Westerlund
+
+2019-09-05, Claremont
+Special guest speakers:
+Mark Smith
+Chris Huntingford
