@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir \"c:\\Sandboxes\\McpCodeGenTest\\DevUI\")"
+      "Bash(dir \"c:\\Sandboxes\\McpCodeGenTest\\DevUI\")",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
